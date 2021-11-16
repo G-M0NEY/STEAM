@@ -1,0 +1,40 @@
+body {
+    background-image: url(https://image.freepik.com/free-vector/hand-drawn-halloween-background_23-2149064303.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
+    
+}
+.heading {
+    text-align: center;
+    color: white;
+    border: solid orangered 5px;
+    background-color: black;
+    font-family: monospace;
+    }
+.quiz {
+        text-align: left;
+        border: solid orangered 3px;
+        background-color: darkgray;
+        text-decoration-color: brown;
+        color: black;
+        font-family: fantasy;
+}
+.question {
+    border: solid 3px black; 
+    background-color: orangered;
+    color: black;
+    text-decoration: darkgreen;
+}
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 681px;
+    width: 906px;
+    border: solid white 3px;
+}
+.custom-cur {
+    cursor: url('img/gam1211.cur'), auto;
+}	

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halloween Activity!</title>
+    <link rel="stylesheet" href="halloween.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+  />
+    <script src="halloween.js" charset="utf-8"></script>
+</head>
+<body class="custom-cur">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
+            <div class="container">
+                <a href="http://steam.great-site.net/STEAM/landpage.html" class="navbar-brand">Mr.Grant's STEAM-Site</a>
+                <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle='collapse'
+                data-bs-target='#navmenu'
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:5500/STEAM/Halloween%20Activity/halloween.HTML" class="nav-link">Halloween Activity</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#halloween" class="nav-link">Thanksgiving Activity</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <form>
+    <h1 class="heading">Halloween Activity!</h1>
+    <fieldset class="quiz">
+        <legend class="question">The first Jack O' Lanterns were made out of what?</legend>
+            <!-- Correct Answer-Turnip --> 
+            <div>
+                <input type="radio" id="pumpkin" name="cheese" value="pumpkin">
+                <label for="pumpkin">Pumpkin</label>
+                <input type="radio" name="cheese" id="cantoleuope" value="cantoleuope">
+                <label for="cantoleuope">Cantoleuope</label>
+                <input type="radio" name="cheese" id="turnip" value="turnip">
+                <label for="turnip">Turnip</label>
+                <input type="radio" name="cheese" id="watermelon" value=watermelon>
+                <label for="watermelon">Watermelon</label>
+            </div>
+        </fieldset>
+    <fieldset class="quiz">
+        <legend class="question">How heavy do you think the worlds largest pumpkin was?</legend>
+        <!-- Correct Answer-2625 -->
+        <div>
+            <input type="radio" name="wieght" id="2145lbs"  value="2145lbs">
+            <label for="2145lbs">2145 Lbs</label>
+            <input type="radio" name="wieght" id="1455lbs" value="1455lbs">
+            <label for="1455lbs">1455 Lbs</label>
+            <input type="radio" name="wieght" id="3456" value="3456">
+            <label for="3456">3456 Lbs</label>
+            <input type="radio" name="wieght" id="2625" value="2625">
+            <label for="2625">2625 Lbs</label>
+        </div>
+    </fieldset>
+    <fieldset class="quiz">
+        <legend class="question">What country was Halloween supposedly started in?</legend>
+        <!-- Correct Answer-Ireland -->
+        <div>
+            <input type="radio" name="country" id="ireland" value="ireland">
+            <label for="ireland">Ireland</label>
+            <input type="radio" name="country" id="usa" value="usa">
+            <label for="usa">United States of America</label>
+            <input type="radio" name="country" id="mexico" value="mexico">
+            <label for="mexico">Mexico</label>
+            <input type="radio" name="country" id="germany" value="germany">
+            <label for="germany">Germany</label>
+        </div>
+    </fieldset>
+    <fieldset class="quiz">
+        <legend class="question">True or False: Halloween has been around since medival times.</legend>
+        <div>
+            <input type="radio" name="option" id="false" value="false">
+            <label for="false">False</label> 
+            <input type="radio" name="option" id="true" value="true">
+            <label for="true">True</label>
+        </div>
+    </fieldset>
+    <fieldset class="quiz">
+        <legend class="question">True or False: Halloween is the second most popular holiday in the US.</legend>
+        <div>
+            <input type="radio" name="halloween" id="holiday" value="holiday">
+            <label for="holiday">True</label> 
+            <input type="radio" name="halloween" id="popular" value="popular">
+            <label for="popular">False</label>
+        </div>
+    </fieldset>
+</form>
+<h2 class="heading">Complete Matching Moon Game to Unlock Answer Key</h2>
+<div>
+<h3 class="heading">Score:<span id="result"></span></h3>
+<div class="grid">
+</div>
+</body>
+</html>
