@@ -10,7 +10,7 @@ const PADDLE_WIDTH = 100;
 const PADDLE_MARGIN_BOTTOM = 50;
 const PADDLE_HEIGHT = 20;
 const BALL_RADIUS = 8;
-let LIFE = 5;
+let LIFE = 1;
 let SCORE = 0;
 const SCORE_UNIT = 5;
 let LEVEL = 1;
@@ -215,7 +215,7 @@ function levelUp(){
         }
         brick.row++;
         createBricks();
-        ball.speed += 0.5;
+        ball.speed += 0.7;
         resetBall();
         LEVEL++;
     }
@@ -274,7 +274,6 @@ const gameover = document.getElementById("gameover");
 const youwin = document.getElementById("youwin");
 const youlose = document.getElementById("youlose");
 const restart = document.getElementById("restart");
-
 // CLICK ON PLAY AGAIN BUTTON
 restart.addEventListener("click", function(){
     location.reload(); // reload the page
@@ -283,7 +282,7 @@ restart.addEventListener("click", function(){
 // SHOW YOU WIN
 function showYouWin(){
     gameover.style.display = "block";
-    youwon.style.display = "block";
+    youwin.style.display = "block";
 }
 
 // SHOW YOU LOSE
