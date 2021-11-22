@@ -18,6 +18,7 @@ const MAX_LEVEL = 5;
 let GAME_OVER = false;
 let leftArrow = false;
 let rightArrow = false;
+let highScore = SCORE;
 // createPaddle
 const paddle = {
     x : cvs.width/2 - PADDLE_WIDTH/2,
