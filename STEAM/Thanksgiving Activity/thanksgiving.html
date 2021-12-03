@@ -45,7 +45,7 @@
   <!-- Quiz -->
   <fieldset class="bg-warning container mt-3 border border-secondary border-5 rounded">
     <h1 class="font-Lucida Console">Fun Fact Guessing Game!</h1>
-    <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-dark">1)</span> Which President refused to recognize Thanksgiving as a National Holiday?</legend>
+    <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-warning">1)</span> Which President refused to recognize Thanksgiving as a National Holiday?</legend>
     <div class="form-check-inline p-2 bg-danger border border-3 border-secondary rounded text-light m-2 h6">
       <input class="form-check-input" type="radio" name="president" id="georgeBush1">
       <label class="form-check-label" for="georgeBush1">
@@ -71,7 +71,7 @@
       </label>
     </div>
     <div>
-      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-dark">2)</span> When was thanksgiving made into a NATIONAL Holiday?</legend>
+      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-warning">2)</span> When was thanksgiving made into a NATIONAL Holiday?</legend>
       <div class="form-check-inline p-2 bg-danger border border-3 border-secondary rounded text-light m-2 h6">
         <input class="form-check-input" type="radio" name="year" id="1776">
         <label class="form-check-label" for="1776">
@@ -98,7 +98,7 @@
       </div>
     </div>
     <div>
-      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-dark">3)</span> Which TV Character has been in the MOST Macy's Thanksgiving Day Parades?</legend>
+      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-warning">3)</span> Which TV Character has been in the MOST Macy's Thanksgiving Day Parades?</legend>
       <div class="form-check-inline p-2 bg-danger border border-3 border-secondary rounded text-light m-2 h6">
         <input class="form-check-input" type="radio" name="character" id="charlieBrown">
         <label class="form-check-label" for="charlieBrown">
@@ -125,7 +125,7 @@
       </div>
     </div>
     <div>
-      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-dark">4)</span> Which President was gifted a live racoon for Thanksgiving?</legend>
+      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-warning">4)</span> Which President was gifted a live racoon for Thanksgiving?</legend>
       <div class="form-check-inline p-2 bg-danger border border-3 border-secondary rounded text-light m-2 h6">
         <input class="form-check-input" type="radio" name="president1" id="george">
         <label class="form-check-label" for="george">
@@ -152,7 +152,7 @@
       </div>
     </div>
     <div>
-      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-dark">2)</span> True or False: Turkey was eaten at the FIRST Thanksgiving</legend>
+      <legend class="bg-danger border-light border-3 rounded p-1 text-light h4"><span class="text-warning">2)</span> True or False: Turkey was eaten at the FIRST Thanksgiving</legend>
       <div class="form-check-inline p-2 bg-danger border border-3 border-secondary rounded text-light m-2 h6">
         <input class="form-check-input" type="radio" name="either" id="true">
         <label class="form-check-label" for="true">
@@ -170,9 +170,7 @@
   
 <!-- Game -->
 
-<div class="sound">
-  <img src="img/SOUND_ON.png" alt="" id="sound">
-</div>
+
 
 <div id="gameover" class="justify-content align-items-center">
   <img src="img/youwon.png" alt="" id="youwon">
@@ -186,16 +184,22 @@
     <p class="card-text text-light">Destroy the bricks by bouncing<br> the ball off of the paddle.</p>
     <p class="card-text text-light">Speed will increase with each level.</p>
   <h2 class="card-title">Key</h2> 
-  <p class="card-text text-light">Drumstick-Score<br>Cornucopia-Level<br>Turkey-Lives</p> 
+  <p class="card-text text-light">Drumstick-Score<br>Cornucopia-Level<br>Turkey-Lives</p>
+ 
   <button id="restart" class="card-text bg-danger text-light">Try Game Again</button>
 </div>
 <div>
 <canvas id="breakout" width="400" height="500"></canvas>
+<img class="sound" src="img/SOUND_ON.png" alt="" id="sound">
 </div>
 <div class="card bg-secondary text-warning border border-3 border-warning p-2">
   <h2 class="card-title text-warning">.-----Answer Key-----.</h2>
-    <p class="card-text text-light">1) Thomas Jefferson<br>Believed making it a National Holiday would<br>violate keeping church seperate from state!</p>
+    <p class="card-text text-light">1) Thomas Jefferson<br>Believed making it a National Holiday would<br> violate keeping church seperate from state!</p>
     <p class="card-text text-light">2) 1941<br>Thanksgiving was made a NATIONAL holiday<br>in 1941 by President Roosevelt</p>
+    <p class="card-text text-light">3) Snoopy<br>Has made the most appearances in the <br>Macy's day parade since his debut in 1968</p>
+    <p class="card-text text-light">4) Calvin Coolidge<br>Was gifted a live racoon as a thanksgiving gift<br>which he kept it as a pet named "Rebecca"!</p>
+    <p class="card-text text-light">5) False<br> There is no record of Turkey being eaten<br> at the first thanksgiving.</p>
+
     <button id="restart" class="card-text bg-danger text-light">Try Quiz Again</button>
 </div>
 </div>
