@@ -22,7 +22,12 @@
         debug: true,
         clearColor: [0, 0, 0, 1],
       });
+
       // load assets
+      loadSprite(
+        "bg",
+        "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
+      );
       loadSprite("santa", "./media/santa1.png");
       loadSprite("ground", "./media/ground1.png");
       loadSprite("coin", "./media/mistletoe.png");
@@ -31,6 +36,9 @@
       loadSprite("apple", "./media/cookie.png");
       loadSprite("ghosty", "./media/grinch.png");
       loadSprite("portal", "./media/portal.png");
+      loadSprite("block", "./media/ground2.png");
+	  loadSprite("key", "./media/tree.png");
+	  loadSprite("door", "./media/door.png")
       // loadSound("powerup", "/sounds/powerup.mp3")
       // loadSound("blip", "/sounds/blip.mp3")
       // loadSound("hit", "/sounds/hit.mp3")
@@ -98,28 +106,28 @@
 
       const LEVELS = [
         [
-          "                          $  ",
-          "                          $  ",
-          "                          $  ",
-          "                          $  ",
-          "                          $  ",
-          "           $$             $  ",
-          "         ====             $  ",
-          "  %                   =   $  ",
-          "                      =      ",
-          "     ^^        = >    =   @  ",
-          "=============================",
+          "-                              - ",
+          "-                              - ",
+          "- *                            - ",
+          "-                             $- ",
+          "- ===                         $- ",
+          "-              $$             $- ",
+          "-            ====             $- ",
+          "-     %                   -   $- ",
+          "-                         -  --- ",
+          "-        ^         - >    -  |@- ",
+          "=================================",
         ],
         [
-          "     $    $    $    $     $",
-          "     $    $    $    $     $",
-          "                           ",
-          "                           ",
-          "                           ",
-          "                           ",
-          "                           ",
-          "     >^^^^>^^^^>^^^^>^^^^ @",
-          "===========================",
+          "                             ",
+          "       $    $    $    $     $",
+          "       $    $    $    $     $",
+          "                             ",
+          "                             ",
+          "                             ",
+          "                             ",
+          "       >^^^ >^^^ >^^^ >^^^  @",
+          "=============================",
         ],
       ];
 
@@ -130,7 +138,9 @@
         height: 100,
         // define each object as a list of components
         "=": () => [sprite("ground"), area(), solid(), origin("bot")],
-          $: () => [sprite("coin"), area(), pos(0, -9), origin("bot"), "coin"],
+		"-": () => [sprite("block"), area(), solid(), origin("bot")],
+		"|": () => [sprite("door"), area(), solid(), "door"],
+        "$": () => [sprite("coin"), area(), pos(0, -9), origin("bot"), "coin"],
         "%": () => [sprite("prize"), area(), solid(), origin("bot"), "prize"],
         "^": () => [sprite("spike"), area(), solid(), origin("bot"), "danger"],
         "#": () => [sprite("apple"), area(), origin("bot"), body(), "apple"],
@@ -149,19 +159,31 @@
           pos(0, -12),
           "portal",
         ],
+		"*": () => [
+			sprite("key"),
+			area(),
+			"key",
+		]
       };
 
       scene("game", ({ levelId, coins } = { levelId: 0, coins: 0 }) => {
         layers(["bg", "obj", "ui"], "obj");
         gravity(3200);
 
+        add([sprite("bg"), scale(12, 6), pos(-800, -500)]);
+
+        // add([
+        //   rect(1920, 1080),
+        //   color(0, 0, 2),
+        //   pos(0, 0, 1)
+        // ]);
         // add level to scene
         const level = addLevel(LEVELS[levelId ?? 0], levelConf);
 
         // define player object
         const player = add([
           sprite("santa"),
-          pos(0, 20),
+          pos(100, 800),
           area(),
           scale(1),
           // makes it fall to gravity and jumpable
@@ -185,6 +207,13 @@
         player.onCollide("danger", () => {
           go("lose");
         });
+
+		let hasKey = false
+
+		player.onCollide("key", (key) => {
+			destroy(key)
+			hasKey = true
+		})
 
         player.onCollide("portal", () => {
           if (levelId + 1 < LEVELS.length) {
