@@ -38,7 +38,7 @@
       loadSprite("portal", "./media/portal.png");
       loadSprite("block", "./media/ground2.png");
 	  loadSprite("key", "./media/tree.png");
-	  loadSprite("door", "./media/door.png")
+	  loadSprite("door", "./media/door1.png")
       // loadSound("powerup", "/sounds/powerup.mp3")
       // loadSound("blip", "/sounds/blip.mp3")
       // loadSound("hit", "/sounds/hit.mp3")
@@ -62,6 +62,7 @@
         };
       }
 
+    
       // custom component that makes stuff grow big
       function big() {
         let timer = 0;
@@ -114,20 +115,22 @@
           "-              $$             $- ",
           "-            ====             $- ",
           "-     %                   -   $- ",
-          "-                         -  --- ",
-          "-        ^         - >    -  |@- ",
+          "-                         -  |-- ",
+          "-        ^         - >    - |  @- ",
           "=================================",
         ],
         [
-          "                             ",
-          "       $    $    $    $     $",
-          "       $    $    $    $     $",
-          "                             ",
-          "                             ",
-          "                             ",
-          "                             ",
-          "       >^^^ >^^^ >^^^ >^^^  @",
-          "=============================",
+
+          "                                 ",
+          "                                 ",
+          "-          $    $    $    $     $",
+          "-          $    $    $    $     $",
+          "-                                ",
+          "-                                ",
+          "-                                ",
+          "-                                ",
+          "-       -  >^^^ >^^^ >^^^ >^^^  @",
+          "=================================",
         ],
       ];
 
@@ -139,7 +142,7 @@
         // define each object as a list of components
         "=": () => [sprite("ground"), area(), solid(), origin("bot")],
 		"-": () => [sprite("block"), area(), solid(), origin("bot")],
-		"|": () => [sprite("door"), area(), solid(), "door"],
+	    	"|": () => [sprite("door"), area(), solid(), "door"],
         "$": () => [sprite("coin"), area(), pos(0, -9), origin("bot"), "coin"],
         "%": () => [sprite("prize"), area(), solid(), origin("bot"), "prize"],
         "^": () => [sprite("spike"), area(), solid(), origin("bot"), "danger"],
@@ -156,7 +159,7 @@
           sprite("portal"),
           area({ scale: 0.5 }),
           origin("bot"),
-          pos(0, -12),
+          pos(0, 0),
           "portal",
         ],
 		"*": () => [
@@ -214,6 +217,11 @@
 			destroy(key)
 			hasKey = true
 		})
+    player.onCollide("door", (d) => {
+		if (hasKey) {
+        destroy(d)
+		}
+	})
 
         player.onCollide("portal", () => {
           if (levelId + 1 < LEVELS.length) {
