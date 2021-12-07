@@ -38,7 +38,7 @@ screen("game", ({ level, score }) => {
     "=": () => [sprite("ground"), area(), solid()],
   };
 
-  const gameLevel = addLevel(LEVELS[levelId ?? 0], levelCfg)
+  const level = addLevel(LEVELS[ levelId ?? 0], levelCfg);
 
 });
 

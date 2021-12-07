@@ -152,6 +152,7 @@
       };
 
       scene("game", ({ levelId, coins } = { levelId: 0, coins: 0 }) => {
+        layers(["bg", "obj", "ui"], "obj");
         gravity(3200);
 
         // add level to scene
