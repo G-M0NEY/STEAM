@@ -173,8 +173,10 @@
         layers(["bg", "obj", "ui"], "obj");
         gravity(3200);
 
-        add([sprite("bg"), scale(12, 6), pos(-800, -500)]);
-
+        add([
+          sprite("bg", {width: width(), height: height()}), scale(3, 3), pos(-700, -700)
+        ]);
+        // scale(12, 6), pos(-800, -500)
         // add([
         //   rect(1920, 1080),
         //   color(0, 0, 2),
