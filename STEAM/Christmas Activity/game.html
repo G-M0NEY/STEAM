@@ -15,7 +15,8 @@
 
       loadSprite(
         "bg",
-        "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
+        "./media/background1.png"
+        // "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
       );
       loadSprite("santa", "./media/santa1.png");
       loadSprite("ground", "./media/ground1.png");
@@ -46,27 +47,27 @@
         };
       }
 
-      const JUMP_FORCE = 1400;
       const MOVE_SPEED = 400;
+      const JUMP_FORCE = 1400;
       const BIG_JUMP_FORCE = 2000;
-      const FALL_DEATH = 2000;
       let CURRENT_JUMP_FORCE = JUMP_FORCE;
+      const FALL_DEATH = 2000;
       let hasKey = false;
 
       const LEVELS = [
-        [
-          "-                                  - ",
-          "-                                  - ",
-          "-                                  - ",
-          "-                                  - ",
-          "-                                  - ",
-          "-                                 $- ",
-          "-                                 $- ",
-          "-                                 $- ",
-          "-                                 $- ",
-          "-                                 $- ",
+      [
+          "-      *                            -",
+          "-                                   -",
+          "-      --                           -",
+          "-                                   -",
+          "-                                   -",
+          "-                                 $ -",
+          "-                                 $ -",
+          "-                                 $ -",
+          "-           ==                    $ -",
+          "-    %                            $ -",
           "-                                |---",
-          "-                               |  @-",
+          "-   >    ^^                     |  @-",
           "-===================================-",
         ],
         [
@@ -105,7 +106,7 @@
         gravity(3200);
 
         add([
-          sprite("bg", {width: width(), height: height()}), scale(3, 3), pos(-700, -700)
+          sprite("bg", {width: width(), height: height()}), scale(3, 5), pos(-700, -700)
       ]);
 
       
@@ -188,7 +189,7 @@
 
         player.onGround((l) => {
           if (l.is("enemy")) {
-            player.jump(JUMP_FORCE * 1.5);
+            player.jump(JUMP_FORCE * 1.2);
             destroy(l);
             addKaboom(player.pos);
           }
@@ -275,7 +276,34 @@
         onKeyPress(() => go("game"));
       });
 
-      go("game");
+      scene("menu", () => {
+        onKeyPress(() => go("game"));
+
+add([
+  text("Snake game"),
+  pos(240, 80),
+  scale(3),
+]);
+
+add([
+  rect(160, 20),
+  pos(240, 180),
+  "button",
+  {
+    onkeypress:("g", () => go('game')),
+  },
+]);
+
+add([
+  text("Play game"),
+  pos(240, 180),
+  color(0, 0, 0)
+]);
+
+
+});
+
+      go("menu");
     </script>
   </body>
 </html>
