@@ -64,46 +64,43 @@
 
     
       // custom component that makes stuff grow big
-      function big() {
-        let timer = 0;
-        let isBig = false;
-        let destScale = 1;
-        return {
-          // component id / name
-          id: "big",
-          // it requires the scale component
-          require: ["scale"],
-          // this runs every frame
-          update() {
-            if (isBig) {
-              timer -= dt();
-              if (timer <= 0) {
-                this.smallify();
-              }
-            }
-            this.scale = this.scale.lerp(vec2(destScale), dt() * 6);
-          },
-          // custom methods
-          isBig() {
-            return isBig;
-          },
-          smallify() {
-            destScale = 1;
-            timer = 0;
-            isBig = false;
-          },
-          biggify(time) {
-            destScale = 2;
-            timer = time;
-            isBig = true;
-          },
-        };
+    function big() {
+    let timer = 0
+    let isBig = false
+    return {
+      update() {
+        if (isBig) {
+          CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
+          timer -= dt()
+          if (timer <= 0) {
+            this.smallify()
+          }
+        }
+      },
+      isBig() {
+        return isBig
+      },
+      smallify() {
+        this.scale = vec2(1)
+        CURRENT_JUMP_FORCE = JUMP_FORCE
+        timer = 0
+        isBig = false
+      },
+      biggify(time) {
+        CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
+        this.scale = vec2(3)
+        timer = time
+        isBig = true     
       }
+    }
+  }
 
       // define some constants
       const JUMP_FORCE = 1400;
       const MOVE_SPEED = 480;
       const FALL_DEATH = 2400;
+      const BIG_JUMP_FORCE = 2000;
+      let CURRENT_JUMP_FORCE = JUMP_FORCE;
 
       const LEVELS = [
         [
@@ -328,7 +325,7 @@
         onKeyPress(() => go("game"));
       });
 
-      go("game");
+      go("game"); 
     </script>
   </body>
 </html>
