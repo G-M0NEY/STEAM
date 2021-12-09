@@ -136,37 +136,19 @@
 
       // define what each symbol means in the level graph
       const levelConf = {
-        // grid size
         width: 100,
         height: 100,
-        // define each object as a list of components
+        
         "=": () => [sprite("ground"), area(), solid(), origin("bot")],
-		"-": () => [sprite("block"), area(), solid(), origin("bot")],
+		    "-": () => [sprite("block"), area(), solid(), origin("bot")],
 	    	"|": () => [sprite("door"), area(), solid(), "door"],
         "$": () => [sprite("coin"), area(), pos(0, -9), origin("bot"), "coin"],
         "%": () => [sprite("prize"), area(), solid(), origin("bot"), "prize"],
         "^": () => [sprite("spike"), area(), solid(), origin("bot"), "danger"],
         "#": () => [sprite("apple"), area(), origin("bot"), body(), "apple"],
-        ">": () => [
-          sprite("ghosty"),
-          area(),
-          origin("bot"),
-          body(),
-          patrol(),
-          "enemy",
-        ],
-        "@": () => [
-          sprite("portal"),
-          area({ scale: 0.5 }),
-          origin("bot"),
-          pos(0, 0),
-          "portal",
-        ],
-		"*": () => [
-			sprite("key"),
-			area(),
-			"key",
-		]
+        ">": () => [sprite("ghosty"), area(), origin("bot"), body(), patrol(), "enemy",],
+        "@": () => [sprite("portal"), area({ scale: 0.5 }), pos(0, 0), "portal",],
+		    "*": () => [sprite("key"),area(), "key",]
       };
 
       

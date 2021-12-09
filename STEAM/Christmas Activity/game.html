@@ -19,33 +19,55 @@
       );
       loadSprite("santa", "./media/santa1.png");
       loadSprite("ground", "./media/ground1.png");
-      loadSprite("point", "./media/mistletoe.png");
-      loadSprite("present", "./media/present.png");
+      loadSprite("coin", "./media/mistletoe.png");
+      loadSprite("prize", "./media/present.png");
       loadSprite("spike", "./media/spike1.png");
       loadSprite("cookie", "./media/cookie.png");
-      loadSprite("grinch", "./media/grinch.png");
+      loadSprite("ghosty", "./media/grinch.png");
       loadSprite("portal", "./media/portal.png");
       loadSprite("block", "./media/ground2.png");
       loadSprite("key", "./media/tree.png");
       loadSprite("door", "./media/door1.png");
 
-      const JUMP_FORCE = 1000;
+      function patrol(speed = 60, dir = 1) {
+        return {
+          id: "patrol",
+          require: ["pos", "area"],
+          add() {
+            this.on("collide", (obj, col) => {
+              if (col.isLeft() || col.isRight()) {
+                dir = -dir;
+              }
+            });
+          },
+          update() {
+            this.move(speed * dir, 0);
+          },
+        };
+      }
+
+      const JUMP_FORCE = 1400;
       const MOVE_SPEED = 400;
+      const BIG_JUMP_FORCE = 2000;
       const FALL_DEATH = 2000;
+      let CURRENT_JUMP_FORCE = JUMP_FORCE;
+      let hasKey = false;
 
       const LEVELS = [
         [
-          "-                              - ",
-          "-                              - ",
-          "- *                            - ",
-          "-                             $- ",
-          "- ===                         $- ",
-          "-              $$             $- ",
-          "-            ====             $- ",
-          "-     %                   -   $- ",
-          "-                         -  |-- ",
-          "-        ^         - >    - |  @-",
-          "=================================",
+          "-                                  - ",
+          "-                                  - ",
+          "-                                  - ",
+          "-                                  - ",
+          "-                                  - ",
+          "-                                 $- ",
+          "-                                 $- ",
+          "-                                 $- ",
+          "-                                 $- ",
+          "-                                 $- ",
+          "-                                |---",
+          "-                               |  @-",
+          "-===================================-",
         ],
         [
 
@@ -63,19 +85,19 @@
       ];
 
       const levelConf = {
-          width: 10,
-          height: 10,
+          width: 100,
+          height: 100,
 
         "=": () => [sprite("ground"), area(), solid(), origin("bot")],
-	    "-": () => [sprite("block"), area(), solid(), origin("bot")],
-	    "|": () => [sprite("door"), area(), solid(), "door"],
-        "$": () => [sprite("point"), area(), pos(0, -9), origin("bot"), "point"],
+	      "-": () => [sprite("block"), area(), solid(), origin("bot")],
+	      "|": () => [sprite("door"), area(), solid(), "door"],
+        "$": () => [sprite("coin"), area(), pos(0, -9), origin("bot"), "coin"],
         "%": () => [sprite("prize"), area(), solid(), origin("bot"), "prize"],
         "^": () => [sprite("spike"), area(), solid(), origin("bot"), "danger"],
         "#": () => [sprite("cookie"), area(), origin("bot"), body(), "cookie"],
         ">": () => [sprite("ghosty"), area(), origin("bot"), body(), patrol(), "enemy",],
         "@": () => [sprite("portal"), area({ scale: 0.5 }), pos(0, 0), "portal",],
-	    "*": () => [sprite("key"),area(), "key",]
+	      "*": () => [sprite("key"),area(), "key",]
       }
 
       scene("game", ({ levelId, coins } = { levelId: 0, coins: 0 }) => {
@@ -86,16 +108,46 @@
           sprite("bg", {width: width(), height: height()}), scale(3, 3), pos(-700, -700)
       ]);
 
-      })
+      
 
       const level = addLevel(LEVELS[levelId ?? 0], levelConf);
 
+      function big() {
+    let timer = 0
+    let isBig = false
+    return {
+      update() {
+        if (isBig) {
+          CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
+          timer -= dt()
+          if (timer <= 0) {
+            this.smallify()
+          }
+        }
+      },
+      isBig() {
+        return isBig
+      },
+      smallify() {
+        this.scale = vec2(1)
+        CURRENT_JUMP_FORCE = JUMP_FORCE
+        timer = 0
+        isBig = false
+      },
+      biggify(time) {
+        this.scale = vec2(2)
+        timer = time
+        isBig = true     
+      }
+    }
+  }
       const player = add([
           sprite("santa"),
           pos(100, 800),
           area(),
           scale(1),
           body(),
+          big(),
           origin("bot"),
         ]);
 
@@ -108,6 +160,122 @@
           }
         });
     
+      player.onCollide("danger", () => {
+        go("lose");
+        });
+
+      	player.onCollide("key", (key) => {
+			destroy(key)
+			hasKey = true
+		  })
+
+      player.onCollide("door", (d) => {
+		  if (hasKey) {
+          destroy(d)
+		  }
+	    })  
+
+      player.onCollide("portal", () => {
+          if (levelId + 1 < LEVELS.length) {
+            go("game", {
+              levelId: levelId + 1,
+              coins: coins,
+            });
+          } else {
+            go("win");
+          }
+        });
+
+        player.onGround((l) => {
+          if (l.is("enemy")) {
+            player.jump(JUMP_FORCE * 1.5);
+            destroy(l);
+            addKaboom(player.pos);
+          }
+        });
+
+        player.onCollide("enemy", (e, col) => {
+          // if it's not from the top, die
+          if (!col.isBottom()) {
+            go("lose");
+          }
+        });
+
+        let cookie = false;
+
+
+        player.onHeadbutt((obj) => {
+          if (obj.is("prize") && !cookie) {
+            const apple = level.spawn("#", obj.gridPos.sub(0, 1));
+            apple.jump();
+            cookie = true;
+          }
+        });
+
+        player.onCollide("cookie", (a) => {
+          destroy(a);
+          // as we defined in the big() component
+          player.biggify(3);
+          cookie = false;
+        });
+
+        let coinPitch = 0;
+
+
+        onUpdate(() => {
+          if (coinPitch > 0) {
+            coinPitch = Math.max(0, coinPitch - dt() * 100);
+          }
+        });
+
+        player.onCollide("coin", (c) => {
+          destroy(c);
+          coinPitch += 100;
+          coins += 1;
+          coinsLabel.text = coins;
+        });
+
+        const coinsLabel = add([text(coins), pos(24, 24), fixed()]);
+
+
+        onKeyPress("space", () => {
+          // these 2 functions are provided by body() component
+          if (player.isGrounded()) {
+            player.jump(CURRENT_JUMP_FORCE);
+          }
+        });
+
+        onKeyDown("left", () => {
+          player.move(-MOVE_SPEED, 0);
+        });
+
+        onKeyDown("right", () => {
+          player.move(MOVE_SPEED, 0);
+        });
+
+        onKeyPress("down", () => {
+          player.weight = 3;
+        });
+
+        onKeyRelease("down", () => {
+          player.weight = 1;
+        });
+
+        onKeyPress("f", () => {
+          fullscreen(!fullscreen());
+        });
+      })
+        scene("lose", () => {
+        add([text("You Lose")]);
+        onKeyPress(() => go("game"));
+      });
+
+      scene("win", () => {
+        add([text("You Win")]);
+        onKeyPress(() => go("game"));
+      });
+
+      go("game");
     </script>
   </body>
 </html>
