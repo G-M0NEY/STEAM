@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Holiday Game!</title>
+    <script src="https://unpkg.com/kaboom@2000.0.0-beta.24/dist/kaboom.js"></script>
+    <style></style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+    <script type="module">
+      kaboom();
+
+      loadSprite(
+        "bg",
+        "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
+      );
+      loadSprite("santa", "./media/santa1.png");
+      loadSprite("ground", "./media/ground1.png");
+      loadSprite("point", "./media/mistletoe.png");
+      loadSprite("present", "./media/present.png");
+      loadSprite("spike", "./media/spike1.png");
+      loadSprite("cookie", "./media/cookie.png");
+      loadSprite("grinch", "./media/grinch.png");
+      loadSprite("portal", "./media/portal.png");
+      loadSprite("block", "./media/ground2.png");
+      loadSprite("key", "./media/tree.png");
+      loadSprite("door", "./media/door1.png");
+
+      const JUMP_FORCE = 1000;
+      const MOVE_SPEED = 400;
+      const FALL_DEATH = 2000;
+
+      const LEVELS = [
+        [
+          "-                              - ",
+          "-                              - ",
+          "- *                            - ",
+          "-                             $- ",
+          "- ===                         $- ",
+          "-              $$             $- ",
+          "-            ====             $- ",
+          "-     %                   -   $- ",
+          "-                         -  |-- ",
+          "-        ^         - >    - |  @-",
+          "=================================",
+        ],
+        [
+
+          "                                 ",
+          "                                 ",
+          "-          $    $    $    $     $",
+          "-          $    $    $    $     $",
+          "-                                ",
+          "-                                ",
+          "-           =     =     =        ",
+          "-                                ",
+          "-       -  >^^^ >^^^ >^^^ >^^^  @",
+          "=================================",
+        ],
+      ];
+
+      const levelConf = {
+          width: 10,
+          height: 10,
+
+        "=": () => [sprite("ground"), area(), solid(), origin("bot")],
+	    "-": () => [sprite("block"), area(), solid(), origin("bot")],
+	    "|": () => [sprite("door"), area(), solid(), "door"],
+        "$": () => [sprite("point"), area(), pos(0, -9), origin("bot"), "point"],
+        "%": () => [sprite("prize"), area(), solid(), origin("bot"), "prize"],
+        "^": () => [sprite("spike"), area(), solid(), origin("bot"), "danger"],
+        "#": () => [sprite("cookie"), area(), origin("bot"), body(), "cookie"],
+        ">": () => [sprite("ghosty"), area(), origin("bot"), body(), patrol(), "enemy",],
+        "@": () => [sprite("portal"), area({ scale: 0.5 }), pos(0, 0), "portal",],
+	    "*": () => [sprite("key"),area(), "key",]
+      }
+
+      scene("game", ({ levelId, coins } = { levelId: 0, coins: 0 }) => {
+        layers(["bg", "obj", "ui"], "obj");
+        gravity(3200);
+
+        add([
+          sprite("bg", {width: width(), height: height()}), scale(3, 3), pos(-700, -700)
+      ]);
+
+      })
+
+      const level = addLevel(LEVELS[levelId ?? 0], levelConf);
+
+      const player = add([
+          sprite("santa"),
+          pos(100, 800),
+          area(),
+          scale(1),
+          body(),
+          origin("bot"),
+        ]);
+
+      player.onUpdate(() => {
+          // center camera to player
+          camPos(player.pos);
+          // check fall death
+          if (player.pos.y >= FALL_DEATH) {
+            go("lose");
+          }
+        });
+    
+    </script>
+  </body>
+</html>
