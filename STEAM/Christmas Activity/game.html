@@ -272,13 +272,16 @@
         });
       })
         scene("lose", () => {
-        add([text("You Lose")]);
+        add([
+          text("You Lose :( press any button to try again"),
+        scale(.8),
+        ]);
         onKeyPress(() => go("game"));
       });
 
       scene("win", () => {
         add([text("You Win")]);
-        onKeyPress(() => go("game"));
+        onKeyPress(() => go("menu"));
       });
 
       scene("menu", () => {
