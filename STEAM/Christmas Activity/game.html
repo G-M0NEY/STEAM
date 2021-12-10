@@ -22,7 +22,7 @@
         "./media/background1.png"
         // "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
       );
-      loadSprite("santa", "./media/santa1.png");
+      // loadSprite("santa", "./media/santa1.png");
       loadSprite("ground", "./media/ground.png");
       loadSprite("coin", "./media/mistletoe.png");
       loadSprite("prize", "./media/present.png");
@@ -62,31 +62,32 @@
       [
           "-      *                            -",
           "-                                   -",
-          "-      --                           -",
-          "-                                   -",
+          "-      ==                $$         -",
+          "-                        ==         -",
           "-                                   -",
           "-                                 $ -",
-          "-                   ---           $ -",
+          "-                            ==   $ -",
           "-                                 $ -",
           "-           ==                    $ -",
-          "-    %           -                ---",
+          "-    %           -      ====      ---",
           "-                -              |-@ -",
           "-                -> -          |    -",
-          "-========^^=========================-",
-          "---------==--------------------------",
+          "-========^^==========^^=============-",
+          "---------==----------==--------------",
         ],
         [
 
           "                                 ",
           "                                 ",
-          "-          $    $    $    $     $",
-          "-          $    $    $    $     $",
-          "-                                ",
-          "-                                ",
-          "-           =     =     =        ",
-          "-                              @ ",
-          "-       -  >^^^ >^^^ >^^^ >^^^   ",
-          "=================================",
+          "-          $    $    $    $      ",
+          "-          $    $    $    $      ",
+          "-                               -",
+          "-                               -",
+          "-           =     =     =       -",
+          "-                              @-",
+          "-       -  >^^^ >^^^ >^^^ >^^   -",
+          "-===============================-",
+          "---------------------------------",
         ],
       ];
 
@@ -105,6 +106,19 @@
         "@": () => [sprite("portal"), area({ scale: 0.5 }), pos(0, 0), "portal",],
 	      "*": () => [sprite("key"),area(), "key",]
       }
+      loadSpriteAtlas("./media/santasheet1.png", {
+    "santa": {
+        // x: 100,
+        // y: 800,
+        width: 100,
+        height: 100,
+        sliceX: 27,
+        anims: {
+            move: { from: 0, to: 15, loop: true},
+            jump: { from: 16, to: 26 },
+        },
+    },
+})
 
       scene("game", ({ levelId, coins } = { levelId: 0, coins: 0 }) => {
         layers(["bg", "obj", "ui"], "obj");
@@ -147,6 +161,9 @@
       }
     }
   }
+
+ 
+
       const player = add([
           sprite("santa"),
           pos(100, 800),
@@ -154,7 +171,6 @@
           scale(1),
           body(),
           big(),
-          origin("bot"),
         ]);
 
       player.onUpdate(() => {
@@ -221,7 +237,7 @@
         player.onCollide("cookie", (a) => {
           destroy(a);
           // as we defined in the big() component
-          player.biggify(3);
+          player.biggify(5);
           cookie = false;
         });
 
@@ -272,9 +288,15 @@
         });
       })
         scene("lose", () => {
+        layers(["bg", "obj", "ui"], "obj");
         add([
+        sprite("bg", {width: width(), height: height()})
+      ]) 
+      add([
           text("You Lose :( press any button to try again"),
-        scale(.8),
+        scale(.5),
+        color(0, 191, 255),
+        pos(0, 170),
         ]);
         onKeyPress(() => go("game"));
       });
@@ -300,25 +322,26 @@
       add([
         text("Use arrow keys to move and space to jump!"),
         pos(0, 170),
-        scale(.8),
+        scale(.5),
       ]);
       
       add([
         text("Find the tree to unlock the next level"),
         pos(0, 280),
-        scale(.8),
+        scale(.5),
       ]);
       
       add([
         text("Press G to play game"),
-        pos(0, 600),
+        pos(0, 380),
+        scale(.7),
         color(0, 191, 255)
       ]);
       
       
       });
 
-      go("menu");
+      go("game");
     </script>
   </body>
 </html>
