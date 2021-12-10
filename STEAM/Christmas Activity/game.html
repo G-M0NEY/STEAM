@@ -14,18 +14,22 @@
       kaboom();
 
       loadSprite(
+        "bgGame",
+        "./media/bgGame.png"
+      )
+      loadSprite(
         "bg",
         "./media/background1.png"
         // "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
       );
       loadSprite("santa", "./media/santa1.png");
-      loadSprite("ground", "./media/ground1.png");
+      loadSprite("ground", "./media/ground.png");
       loadSprite("coin", "./media/mistletoe.png");
       loadSprite("prize", "./media/present.png");
       loadSprite("spike", "./media/spike1.png");
       loadSprite("cookie", "./media/cookie.png");
       loadSprite("ghosty", "./media/grinch.png");
-      loadSprite("portal", "./media/portal.png");
+      loadSprite("portal", "./media/portal1.png");
       loadSprite("block", "./media/ground2.png");
       loadSprite("key", "./media/tree.png");
       loadSprite("door", "./media/door1.png");
@@ -62,13 +66,14 @@
           "-                                   -",
           "-                                   -",
           "-                                 $ -",
-          "-                                 $ -",
+          "-                   ---           $ -",
           "-                                 $ -",
           "-           ==                    $ -",
-          "-    %                            $ -",
-          "-                                |---",
-          "-   >    ^^                     |  @-",
-          "-===================================-",
+          "-    %           -                ---",
+          "-                -              |-@ -",
+          "-                -> -          |    -",
+          "-========^^=========================-",
+          "---------==--------------------------",
         ],
         [
 
@@ -79,8 +84,8 @@
           "-                                ",
           "-                                ",
           "-           =     =     =        ",
-          "-                                ",
-          "-       -  >^^^ >^^^ >^^^ >^^^  @",
+          "-                              @ ",
+          "-       -  >^^^ >^^^ >^^^ >^^^   ",
           "=================================",
         ],
       ];
@@ -106,9 +111,9 @@
         gravity(3200);
 
         add([
-          sprite("bg", {width: width(), height: height()}), scale(3, 5), pos(-700, -700)
+          sprite("bgGame", {width: width(), height: height()}), scale(3, 5), pos(-700, -700)
       ]);
-
+      
       
 
       const level = addLevel(LEVELS[levelId ?? 0], levelConf);
@@ -277,31 +282,38 @@
       });
 
       scene("menu", () => {
-        onKeyPress(() => go("game"));
+        layers(["bg", "obj", "ui"], "obj");
+        onKeyPress("g", () => go("game"));
 
-add([
-  text("Snake game"),
-  pos(240, 80),
-  scale(3),
-]);
+      add([
+        sprite("bg", {width: width(), height: height()})
+      ]) 
+      add([
+        text("Holiday Game"),
+        pos(0, 0),
+        scale(2),
+      ]);
 
-add([
-  rect(160, 20),
-  pos(240, 180),
-  "button",
-  {
-    onkeypress:("g", () => go('game')),
-  },
-]);
-
-add([
-  text("Play game"),
-  pos(240, 180),
-  color(0, 0, 0)
-]);
-
-
-});
+      add([
+        text("Use arrow keys to move and space to jump!"),
+        pos(0, 170),
+        scale(.8),
+      ]);
+      
+      add([
+        text("Find the tree to unlock the next level"),
+        pos(0, 280),
+        scale(.8),
+      ]);
+      
+      add([
+        text("Press G to play game"),
+        pos(0, 600),
+        color(0, 191, 255)
+      ]);
+      
+      
+      });
 
       go("menu");
     </script>
