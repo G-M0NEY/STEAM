@@ -9,6 +9,8 @@
     <style></style>
   </head>
   <body>
+    <script src="https://kaboomjs.com/lib/0.5.0/kaboom.js"></script>
+
     <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
     <script type="module">
       kaboom();
@@ -22,7 +24,7 @@
         "./media/background1.png"
         // "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
       );
-      // loadSprite("santa", "./media/santa1.png");
+      loadSprite("santa", "./media/santa1.png");
       loadSprite("ground", "./media/ground.png");
       loadSprite("coin", "./media/mistletoe.png");
       loadSprite("prize", "./media/present.png");
@@ -33,6 +35,21 @@
       loadSprite("block", "./media/ground2.png");
       loadSprite("key", "./media/tree.png");
       loadSprite("door", "./media/door1.png");
+      loadSprite("santaleft", "./media/santa2.png")
+//       loadSpriteAtlas("./media/spritesheet.png", {
+//     "santa": {
+//         x: 100,
+//         y: 800,
+//         width: 98,
+//         height: 98,
+//         sliceX: 27,
+//         anims: {
+//             run: { from: 0, to: 18, loop: true},
+//             jump: { from: 19, to: 26 },
+//         },
+//     },
+// })
+
 
       function patrol(speed = 60, dir = 1) {
         return {
@@ -60,6 +77,8 @@
 
       const LEVELS = [
       [
+          "-                                   -", 
+          "-                                   -",
           "-      *                            -",
           "-                                   -",
           "-      ==                $$         -",
@@ -76,7 +95,7 @@
           "---------==----------==--------------",
         ],
         [
-
+          "                                 ",
           "                                 ",
           "                                 ",
           "-          $    $    $    $      ",
@@ -106,30 +125,17 @@
         "@": () => [sprite("portal"), area({ scale: 0.5 }), pos(0, 0), "portal",],
 	      "*": () => [sprite("key"),area(), "key",]
       }
-      loadSpriteAtlas("./media/santasheet1.png", {
-    "santa": {
-        // x: 100,
-        // y: 800,
-        width: 100,
-        height: 100,
-        sliceX: 27,
-        anims: {
-            move: { from: 0, to: 15, loop: true},
-            jump: { from: 16, to: 26 },
-        },
-    },
-})
-
+      
       scene("game", ({ levelId, coins } = { levelId: 0, coins: 0 }) => {
         layers(["bg", "obj", "ui"], "obj");
         gravity(3200);
-
         add([
-          sprite("bgGame", {width: width(), height: height()}), scale(3, 5), pos(-700, -700)
+          sprite("bgGame", {width: width(), height: height()}), scale(10, 10), pos(-700, -1000)
       ]);
       
+    
       
-
+        
       const level = addLevel(LEVELS[levelId ?? 0], levelConf);
 
       function big() {
@@ -267,12 +273,18 @@
           }
         });
 
+
         onKeyDown("left", () => {
           player.move(-MOVE_SPEED, 0);
+          // player.scale.x = -1
+          // player.play('run')
+          player.flipX(true)
         });
 
         onKeyDown("right", () => {
           player.move(MOVE_SPEED, 0);
+          player.flipX(false)
+
         });
 
         onKeyPress("down", () => {
@@ -287,19 +299,33 @@
           fullscreen(!fullscreen());
         });
       })
+
+      
         scene("lose", () => {
         layers(["bg", "obj", "ui"], "obj");
         add([
         sprite("bg", {width: width(), height: height()})
       ]) 
       add([
-          text("You Lose :( press any button to try again"),
+          text("You Lose :( press R to try again"),
         scale(.5),
         color(0, 191, 255),
         pos(0, 170),
         ]);
-        onKeyPress(() => go("game"));
+    add([
+          text("Press M to return to menu"),
+        scale(.5),
+        color(0, 191, 255),
+        pos(0, 270),
+        ]);  
+        onKeyPress("r", () => go("game", {
+          // coins: coins,
+          levelId: 1
+        }));
+        onKeyPress("m", () => go("menu"));
       });
+
+      
 
       scene("win", () => {
         add([text("You Win")]);
