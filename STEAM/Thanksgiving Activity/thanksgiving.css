@@ -5,3 +5,58 @@ body {
     background-attachment: fixed;
     background-size: cover;
 }
+#sound{
+    width: 30px;
+    height : 30px;
+    cursor: pointer;
+    position: absolute;
+}
+#gameover{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width : 400px;
+    height: 500px;
+
+    
+}
+#youwon{
+    width: 100px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: none;
+}
+#youlose{
+    width:400px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: none;
+}
+/* #restart{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    text-align: center;
+    
+    cursor: pointer;
+    font-size: 1.25em;
+    color : #FFF;
+} */
+/* .gameBorder {
+    border: solid yellow;
+    padding: 1px;
+} */
