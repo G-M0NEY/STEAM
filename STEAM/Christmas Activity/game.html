@@ -21,7 +21,6 @@
         "./media/background1.png"
         // "https://media.istockphoto.com/vectors/seamless-winter-landscape-with-rocky-mountains-for-christmas-game-vector-id497419980?b=1&k=20&m=497419980&s=170667a&w=0&h=uWDAASbieD436NLrQUKIUswjTCJHpvOWY2dwactxAMI="
       );
-      loadSprite("santa", "./media/santa1.png");
       loadSprite("ground", "./media/ground.png");
       loadSprite("coin", "./media/mistletoe.png");
       loadSprite("prize", "./media/present.png");
@@ -32,16 +31,17 @@
       loadSprite("block", "./media/ground2.png");
       loadSprite("key", "./media/tree.png");
       loadSprite("door", "./media/door1.png");
-      loadSprite("santaleft", "./media/santa2.png");
       loadSpriteAtlas("./media/spritesheet.png", {
         santa: {
-          x: 11,
+          x: 10,
           y: -10,
-          width: 1550,
+          width: 6078,
           height: 97,
-          sliceX: 11,
+          sliceX: 43,
           anims: {
-            run: { from: 0, to: 10, speed: 50, loop: true },
+            idle: {from: 0, to: 14, speed: 10, loop: true },
+            jump: { from: 15, to: 21, speed: 100, loop: false },
+            run: { from: 32, to: 42, speed: 50, loop: true },
           },
         },
       });
@@ -315,20 +315,24 @@
           player.flipX(false);
         });
 
-        onKeyPress(["left", "right", "up", "down"], () => {
+        onKeyPress(["left", "right", "down"], () => {
           player.play("run");
         });
 
-        // onKeyRelease(["left", "right", "up", "down"], () => {
-        //   if (
-        //     !isKeyDown("left") &&
-        //     !isKeyDown("right") &&
-        //     !isKeyDown("up") &&
-        //     !isKeyDown("down")
-        //   ) {
-        //     player.play("idle");
-        //   }
-        // });
+        onKeyDown(["space"], () => {
+          player.play("jump");
+        });
+
+        onKeyRelease(["left", "right", "down", "space"], () => {
+          if (
+            !isKeyDown("left") &&
+            !isKeyDown("right") &&
+            !isKeyDown("up") &&
+            !isKeyDown("down")
+          ) {
+            player.play("idle");
+          }
+        });
 
         onKeyPress("down", () => {
           player.weight = 3;
