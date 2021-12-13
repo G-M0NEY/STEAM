@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Holiday Game!</title>
     <script src="https://unpkg.com/kaboom@2000.0.0-beta.24/dist/kaboom.js"></script>
-    <style></style>
+    <link rel="stylesheet" href="game.css" />
   </head>
   <body>
     <script src="https://kaboomjs.com/lib/0.5.0/kaboom.js"></script>
@@ -33,19 +33,18 @@
       loadSprite("key", "./media/tree.png");
       loadSprite("door", "./media/door1.png");
       loadSprite("santaleft", "./media/santa2.png");
-      //       loadSpriteAtlas("./media/spritesheet.png", {
-      //     "santa": {
-      //         x: 100,
-      //         y: 800,
-      //         width: 98,
-      //         height: 98,
-      //         sliceX: 27,
-      //         anims: {
-      //             run: { from: 0, to: 18, loop: true},
-      //             jump: { from: 19, to: 26 },
-      //         },
-      //     },
-      // })
+      loadSpriteAtlas("./media/spritesheet.png", {
+        santa: {
+          x: 11,
+          y: -10,
+          width: 1550,
+          height: 97,
+          sliceX: 11,
+          anims: {
+            run: { from: 0, to: 10, speed: 50, loop: true },
+          },
+        },
+      });
 
       function patrol(speed = 60, dir = 1) {
         return {
@@ -139,7 +138,7 @@
         "=": () => [sprite("ground"), area(), solid(), origin("bot")],
         "-": () => [sprite("block"), area(), solid(), origin("bot")],
         "|": () => [sprite("door"), area(), solid(), "door"],
-        "$": () => [sprite("coin"), area(), pos(0, -9), origin("bot"), "coin"],
+        $: () => [sprite("coin"), area(), pos(0, -9), origin("bot"), "coin"],
         "%": () => [sprite("prize"), area(), solid(), origin("bot"), "prize"],
         "^": () => [sprite("spike"), area(), solid(), origin("bot"), "danger"],
         "#": () => [sprite("cookie"), area(), origin("bot"), body(), "cookie"],
@@ -206,13 +205,11 @@
         const player = add([
           sprite("santa"),
           pos(100, 800),
-          // health(3),
           area(),
           scale(1),
           body(),
           big(),
         ]);
-
 
         player.onUpdate(() => {
           // center camera to player
@@ -235,7 +232,7 @@
         player.onCollide("door", (d) => {
           if (hasKey) {
             destroy(d);
-          } 
+          }
           hasKey = false;
         });
 
@@ -261,7 +258,7 @@
         player.onCollide("enemy", (e, col) => {
           // if it's not from the top, die
           if (!col.isBottom()) {
-            go("lose", {coins: coinsLabel.value});
+            go("lose", { coins: coinsLabel.value });
           }
         });
 
@@ -289,7 +286,7 @@
             coinPitch = Math.max(0, coinPitch - dt() * 100);
           }
         });
-        
+
         player.onCollide("coin", (c) => {
           destroy(c);
           coinPitch += 100;
@@ -318,8 +315,24 @@
           player.flipX(false);
         });
 
+        onKeyPress(["left", "right", "up", "down"], () => {
+          player.play("run");
+        });
+
+        // onKeyRelease(["left", "right", "up", "down"], () => {
+        //   if (
+        //     !isKeyDown("left") &&
+        //     !isKeyDown("right") &&
+        //     !isKeyDown("up") &&
+        //     !isKeyDown("down")
+        //   ) {
+        //     player.play("idle");
+        //   }
+        // });
+
         onKeyPress("down", () => {
           player.weight = 3;
+          player.play("run");
         });
 
         onKeyRelease("down", () => {
@@ -346,9 +359,7 @@
           color(0, 191, 255),
           pos(0, 270),
         ]);
-        onKeyPress("r", () =>
-          go("game")
-        );
+        onKeyPress("r", () => go("game"));
         onKeyPress("m", () => go("menu"));
       });
 
@@ -367,9 +378,7 @@
           color(0, 191, 255),
           pos(0, 270),
         ]);
-        onKeyPress("r", () =>
-          go("game")
-        );
+        onKeyPress("r", () => go("game"));
         onKeyPress("m", () => go("menu"));
       });
 
@@ -400,7 +409,7 @@
         ]);
       });
 
-      go("menu");
+      go("game");
     </script>
   </body>
 </html>

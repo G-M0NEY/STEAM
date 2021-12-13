@@ -1,0 +1,22 @@
+.player {
+    display: block;
+    width: 151px;
+    height: 193px;
+    background: url("spritesheet.png") left center;
+    animation: astroboy 0.8s steps(27) infinite;
+}
+
+    /* .astroboy:hover {
+        animation-play-state: paused;
+    } */
+
+@keyframes player {
+
+    0% {
+        background-position: 0px;
+    }
+
+    100% {
+        background-position: -3816px;
+    }
+}
