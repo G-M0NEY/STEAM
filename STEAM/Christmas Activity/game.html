@@ -232,7 +232,7 @@
         });
 
         player.onCollide("danger", () => {
-          go("lose", score);
+          go("lose");
         });
 
         player.onCollide("key", (key) => {
@@ -247,15 +247,15 @@
           hasKey = false;
         });
 
-        player.onCollide("portal", () => {
+        player.onCollide("portal", (score) => {
           if (levelId + 1 < LEVELS.length) {
             go("game", {
               levelId: levelId + 1,
               coins: coins,
-              score: score,
+              
             });
           } else {
-            go("win", score);
+            go("win", {score: score});
           }
         });
 
@@ -297,11 +297,12 @@
           if (coinPitch > 0) {
             coinPitch = Math.max(0, coinPitch - dt() * 100);
           }
-          if (score >= 0) {
+
+        });
+        player.onUpdate(() => {
           score++;
 		      scoreLabel.text = score;
-          }
-        });
+        })
 
         player.onCollide("coin", (c) => {
           destroy(c);
