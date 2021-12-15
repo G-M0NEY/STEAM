@@ -71,6 +71,8 @@
       let hasKey = false;
       let level = 0;
 
+     
+      
       const LEVELS = [
         [
           "-------------------------------------",
@@ -116,9 +118,9 @@
           "-                                   -",
           "-                                   -",
           "-      *                            -",
-          "-   ^       ^                       -",
-          "-   ============                    -",
           "-                                   -",
+          "-  =^^=====^^===                    -",
+          "-  -==----------                    -",
           "-                                   -",
           "-                                   -",
           "-                                   -",
@@ -159,7 +161,7 @@
         "*": () => [sprite("key"), area(), "key"],
       };
 
-      scene("game", ({ levelId, coins } = { levelId: 0, coins: 0 }) => {
+      scene("game", ({ levelId, coins, } = { levelId: 0, coins: 0 }) => {
         layers(["bg", "obj", "ui"], "obj");
         gravity(3200);
         add([
@@ -169,6 +171,15 @@
         ]);
 
         const level = addLevel(LEVELS[levelId ?? 0], levelConf);
+
+        let score = 0;
+
+        const scoreLabel = add([
+          text(score),
+          pos(24, 74),
+          fixed()
+        ]);
+
 
         function big() {
           let timer = 0;
@@ -221,7 +232,7 @@
         });
 
         player.onCollide("danger", () => {
-          go("lose");
+          go("lose", score);
         });
 
         player.onCollide("key", (key) => {
@@ -241,9 +252,10 @@
             go("game", {
               levelId: levelId + 1,
               coins: coins,
+              score: score,
             });
           } else {
-            go("win");
+            go("win", score);
           }
         });
 
@@ -258,7 +270,7 @@
         player.onCollide("enemy", (e, col) => {
           // if it's not from the top, die
           if (!col.isBottom()) {
-            go("lose", { coins: coinsLabel.value });
+            go("lose", score);
           }
         });
 
@@ -284,6 +296,10 @@
         onUpdate(() => {
           if (coinPitch > 0) {
             coinPitch = Math.max(0, coinPitch - dt() * 100);
+          }
+          if (score >= 0) {
+          score++;
+		      scoreLabel.text = score;
           }
         });
 
@@ -348,7 +364,7 @@
         });
       });
 
-      scene("lose", () => {
+      scene("lose", (coins) => {
         layers(["bg", "obj", "ui"], "obj");
         add([sprite("bg", { width: width(), height: height() })]);
         add([
@@ -367,7 +383,7 @@
         onKeyPress("m", () => go("menu"));
       });
 
-      scene("win", () => {
+      scene("win", (score) => {
         layers(["bg", "obj", "ui"], "obj");
         add([sprite("bg", { width: width(), height: height() })]);
         add([
@@ -382,6 +398,12 @@
           color(0, 191, 255),
           pos(0, 270),
         ]);
+        add([
+	    	text(score),
+	    	pos(width() / 2, height() / 2 + 80),
+	    	scale(2),
+	    	origin("center"),
+	    ]);
         onKeyPress("r", () => go("game"));
         onKeyPress("m", () => go("menu"));
       });
