@@ -40,7 +40,7 @@
           sliceX: 43,
           anims: {
             idle: {from: 0, to: 14, speed: 10, loop: true },
-            jump: { from: 15, to: 20, speed: 100, loop: false },
+            jump: { from: 15, to: 21, speed: 100, loop: false },
             run: { from: 32, to: 42, speed: 50, loop: true },
           },
         },
@@ -224,7 +224,7 @@
         });
 
         player.onCollide("danger", () => {
-          go("lose");
+          go("lose", score);
         });
 
         player.onCollide("key", (key) => {
@@ -239,19 +239,15 @@
           hasKey = false;
         });
 
-        player.onCollide("portal", (score) => {
+        player.onCollide("portal", () => {
           if (levelId + 1 < LEVELS.length) {
             go("game", {
               levelId: levelId + 1,
               coins: coins,
-              
+              score: score,
             });
           } else {
-<<<<<<< HEAD
             go("win", score, coins);
-=======
-            go("win", {score: score});
->>>>>>> 4494c6ab603f6bb96dc2e0fa5d07e4f3002a2031
           }
         });
 
@@ -294,19 +290,10 @@
           if (coinPitch > 0) {
             coinPitch = Math.max(0, coinPitch - dt() * 100);
           }
-<<<<<<< HEAD
           if (scorePitch >= 0) {
             scorePitch = Math.max(0, scorePitch - dt() * 100);
           }
         });
-=======
-
-        });
-        player.onUpdate(() => {
-          score++;
-		      scoreLabel.text = score;
-        })
->>>>>>> 4494c6ab603f6bb96dc2e0fa5d07e4f3002a2031
 
         player.onCollide("coin", (c) => {
           destroy(c);
