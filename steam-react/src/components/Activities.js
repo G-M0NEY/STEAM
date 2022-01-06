@@ -1,25 +1,15 @@
 import React from 'react'
-import {Link, Route} from "react-router-dom"
-import {CardGroup, Card} from "react-bootstrap"
-import SantaGame from './SantaGame'
+// import {Link, Route} from "react-router-dom"
+// import {CardGroup, Card} from "react-bootstrap"
+// import SantaGame from './SantaGame'
 
 class Activities extends React.Component {
   render() {
     return (
-      <CardGroup>
-      <Card>
-        <Link to="/SantaGame">
-
-            <span>SANTAGAME</span>
-          
-        </Link>
-        <Route
-                    path="/SantaGame"
-                    component={SantaGame} 
-                />
-        </Card>
-        </CardGroup>
-    )
+          <h1>
+            <a target="_blank" rel="noreferrer" className='bg-light border border-rounded border-dark m-2 text-primary'  href={process.env.PUBLIC_URL + "game.html"} >Santa Speedrun</a>
+          </h1>
+      )
     }
 }
 

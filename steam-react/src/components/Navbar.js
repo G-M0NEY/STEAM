@@ -34,6 +34,7 @@ const Navigation = () => {
                 <Nav.Link onMouseOver={changeBg} onMouseLeave={revertBg} className="text-white h4" as={Link} to={"/activities"} >Activities</Nav.Link>
               </Nav>
               <Nav>
+                
                 <Nav.Link className="text-white h4" as={Link} to={"/activities"} >Games</Nav.Link>
               </Nav>
             </Navbar.Collapse>
