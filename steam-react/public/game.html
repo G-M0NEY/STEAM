@@ -289,13 +289,13 @@
         let coinPitch = 0;
         let scorePitch = 0;
 
-        onUpdate(() => {
+        player.onUpdate(() => {
           if (coinPitch > 0) {
             coinPitch = Math.max(0, coinPitch - dt() * 100);
           }
-          if (scorePitch >= 0) {
-            scorePitch = Math.max(0, scorePitch - dt() * 100);
-          }
+          // if (scorePitch >= 0) {
+          //   scorePitch = Math.max(0, scorePitch - dt() * 100);
+          // }
         });
 
         player.onCollide("coin", (c) => {
