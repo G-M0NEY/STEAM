@@ -8,7 +8,9 @@ import {
   Switch
 } from "react-router-dom";
 import Activities from './Activities';
+import Games from "./Games"
 import './components.css';
+
 
 function changeBg(e) {
     e.target.style.background = 'black';
@@ -35,12 +37,15 @@ const Navigation = () => {
               </Nav>
               <Nav>
                 
-                <Nav.Link className="text-white h4" as={Link} to={"/activities"} >Games</Nav.Link>
+                <Nav.Link onMouseOver={changeBg} onMouseLeave={revertBg} className="text-white h4" as={Link} to={"/games"} >Games</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
         </div>
         <Switch>
+          <Route path="/games">
+            <Games />
+          </Route>
           <Route path="/activities">
             <Activities />
           </Route>
