@@ -14,7 +14,31 @@ const candyColors = [
 
 const CrushBoard = () => {
     const [currentColorArrangment, setCurrentColorArrangement] = useState()
+
+
+    const checkForColumnOfFour = () => {
+        for (let i = 0; i < 39; i++) {
+            const columnOfFour = [i, i + width, i + width * 2, i + width * 3]
+            const decidedColor = currentColorArrangment[i]
+
+            if( columnOfFour.every(square => currentColorArrangment[square] === decidedColor)) {
+                columnOfFour.forEach(square => currentColorArrangment[square] = '')
+            }
+        }
+    }
     
+    const checkForColumnOfThree = () => {
+        for (let i = 0; i <= 47; i++) {
+            const columnOfThree = [i, i + width, i + width * 2]
+            const decidedColor = currentColorArrangment[i]
+
+            if( columnOfThree.every(square => currentColorArrangment[square] === decidedColor)) {
+                columnOfThree.forEach(square => currentColorArrangment[square] = '')
+            }
+        }
+    }
+    
+
     const createBoard = () => {
         const randomColorArrangment = []
         for (let i=0; i < width * width; i++) {
@@ -27,6 +51,15 @@ const CrushBoard = () => {
     useEffect(() => {
         createBoard()
     }, [])
+
+    useEffect (() => {
+        const timer = setInterval(() => {
+            checkForColumnOfFour()
+            checkForColumnOfThree()
+            setCurrentColorArrangement([...currentColorArrangment])
+        }, 100)
+        return () => clearInterval(timer)
+    }, [checkForColumnOfFour, checkForColumnOfThree,  currentColorArrangment])
 
 
 
