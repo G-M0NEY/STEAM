@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react';
 import "./components.css";
+import blue from "./media/blueHeart.png";
+
 const width = 8
 const candyColors = [
     "blue",
@@ -64,6 +66,7 @@ const CrushBoard = () => {
 
 
   return (
+    <div className='container'>
     <div className='loveCrush'>
         <div className='game'>
             {currentColorArrangment?.map((candyColor, index) => (
@@ -74,7 +77,7 @@ const CrushBoard = () => {
                 />
             ))}
         </div>
-
+    </div>
     </div>
   )
 };

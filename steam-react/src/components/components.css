@@ -29,9 +29,9 @@
     width: 906px;
     border: solid white 3px;
 }
-.crushGame {
+.loveCrush {
     display: flex;
-    padding: 30px;
+    padding: 3px;
 }
 .game {
     width: 560px;
