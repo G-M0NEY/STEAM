@@ -34,6 +34,7 @@
     padding: 3px;
 }
 .game {
+    background-color: black;
     width: 560px;
     height: 560px;
     display: flex;
