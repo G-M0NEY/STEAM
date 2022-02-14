@@ -7,10 +7,16 @@
     <title>Capybara</title>
 </head>
 <body>
+<script>
+    var clicks = 0;
+
+function onClick() {
+  clicks += 1;
+  document.getElementById("clicks").innerHTML = clicks;
+};
+</script>
 <h1>Capybara</h1>
-<button onclick="alert">CapyClick</button>
-<h2>CapyCoin</h2>
-<h3>Water</h3>
-<h4>Melon</h4>
+<button type="button" onClick="onClick()">Click me</button>
+<p>Clicks: <a id="clicks">0</a></p>
 </body>
 </html>
