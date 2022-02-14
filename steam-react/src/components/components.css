@@ -30,11 +30,19 @@
     border: solid white 3px;
 }
 .loveCrush {
+    margin: auto;
+    width: 50%;
+    border: 5px solid pink;
+    border-style: inset;
+    padding: 10px;
     display: flex;
     padding: 30px;
+    background-image: url("https://d1csarkz8obe9u.cloudfront.net/posterpreviews/zoom-backgrounds%2C-valentines-backgrounds-design-template-b4500cc18edcab04fa402e3e29873a7d_screen.jpg?ts=1610962779");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .game {
-    background-color: black;
+    background-color: white;
     width: 560px;
     height: 560px;
     display: flex;
@@ -44,4 +52,7 @@
 .game img {
     width: 70px;
     height: 70px;
+}
+.score-board {
+    background-color: white;
 }
