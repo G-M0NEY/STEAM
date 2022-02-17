@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/G-M0NEY/STEAM/issues"
   },
-  "homepage": "https://github.com/G-M0NEY/STEAM#readme"
+  "homepage": "https://github.com/G-M0NEY/STEAM#readme",
+  "dependencies": {
+    "phaser": "^3.55.2"
+  }
 }
